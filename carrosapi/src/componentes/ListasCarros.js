@@ -2,22 +2,34 @@ import React from 'react';
 import axios from 'axios';
 
 const ListasCarros = () => {
-  const state = {
-    carros: [],
-  };
+  //quando era com class
+  // const state = {
+  //   carros: [],
+  // };
+  const [carros, setCarros] = React.useState([]);
 
-  function componentDidMount() {
+  React.useEffect(() => {
     axios
       .get('https://cfbcursosapireactexemplo1.brcampos.repl.co/')
       .then((res) => {
         const dadosCarros = res.data;
-        this.setState({ carros: dadosCarros });
+        setCarros(dadosCarros);
       });
-  }
+  }, []);
+
+  //quando era com class
+  // function componentDidMount() {
+  //   axios
+  //     .get('https://cfbcursosapireactexemplo1.brcampos.repl.co/')
+  //     .then((res) => {
+  //       const dadosCarros = res.data;
+  //       this.setState({ carros: dadosCarros });
+  //     });
+  // }
 
   return (
     <div>
-      {state.carros.map((carro) => (
+      {carros.map((carro) => (
         <div key={carro.id}>
           {carro.marca} - {carro.modelo}
         </div>
