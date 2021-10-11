@@ -8,14 +8,24 @@ const ListasCarros = () => {
   // };
   const [carros, setCarros] = React.useState([]);
 
+  // ########################  USANDO FETCH
   React.useEffect(() => {
-    axios
-      .get('https://cfbcursosapireactexemplo1.brcampos.repl.co/')
-      .then((res) => {
-        const dadosCarros = res.data;
-        setCarros(dadosCarros);
+    fetch('https://cfbcursosapireactexemplo1.brcampos.repl.co/')
+      .then((res) => res.json())
+      .then((resultado) => {
+        setCarros(resultado);
       });
-  }, []);
+  });
+
+  // ######################## USANDO AXIOS
+  // React.useEffect(() => {
+  //   axios //instalei a extensão axios com npm install axios: npm install axios
+  //     .get('https://cfbcursosapireactexemplo1.brcampos.repl.co/')
+  //     .then((res) => {
+  //       const dadosCarros = res.data;
+  //       setCarros(dadosCarros);
+  //     });
+  // }, []);
 
   //quando era com class
   // function componentDidMount() {
