@@ -1,29 +1,27 @@
 import React from 'react';
 import axios from 'axios';
-import useDebounce from './useDebounce';
+import SearchInput from './SearchInput';
 
-const ListasCarros = ({ value, onChange }) => {
+const ListasCarros = () => {
   //quando era com class
   // const state = {
   //   carros: [],
   // };
   const [carros, setCarros] = React.useState([]);
-  const [displayValue, setDisplayvalue] = React.useState(value);
-  const debouncedChange = useDebounce(onChange, 500);
+  const [info, setInfo] = React.useState({});
+  const [text, setText] = React.useState('');
 
   // ########################  USANDO FETCH
   React.useEffect(() => {
-    fetch('https://cfbcursosapireactexemplo1.brcampos.repl.co/')
-      .then((res) => res.json())
-      .then((resultado) => {
-        setCarros(resultado);
-      });
-  });
-
-  function handleChange(event) {
-    setDisplayvalue(event.target.value);
-    debouncedChange(event.target.value);
-  }
+    if (text) {
+      console.log(text);
+      fetch('https://cfbcursosapireactexemplo1.brcampos.repl.co/')
+        .then((res) => res.json())
+        .then((resultado) => {
+          setInfo(resultado);
+        });
+    }
+  }, [text]);
 
   // ######################## USANDO AXIOS
   // React.useEffect(() => {
@@ -47,7 +45,7 @@ const ListasCarros = ({ value, onChange }) => {
 
   return (
     <div>
-      <input type="search" value={displayValue} onChange={handleChange} />
+      <SearchInput value={text} onChange={(search) => setText(search)} />
       {carros.map((carro) => (
         <div key={carro.id}>
           {carro.marca} - {carro.modelo}
