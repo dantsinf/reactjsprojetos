@@ -22,7 +22,7 @@ const ListasCarros = ({ value, onChange }) => {
 
   function handleChange(event) {
     setDisplayvalue(event.target.value);
-    onChange(event.target.value);
+    debouncedChange(event.target.value);
   }
 
   // ######################## USANDO AXIOS
@@ -47,7 +47,7 @@ const ListasCarros = ({ value, onChange }) => {
 
   return (
     <div>
-      <input type="text" value={value} onChange={handleChange} />
+      <input type="search" value={displayValue} onChange={handleChange} />
       {carros.map((carro) => (
         <div key={carro.id}>
           {carro.marca} - {carro.modelo}
