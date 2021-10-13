@@ -1,12 +1,15 @@
 import React from 'react';
 import axios from 'axios';
+import useDebounce from './useDebounce';
 
-const ListasCarros = () => {
+const ListasCarros = ({ value, onChange }) => {
   //quando era com class
   // const state = {
   //   carros: [],
   // };
   const [carros, setCarros] = React.useState([]);
+  const [displayValue, setDisplayvalue] = React.useState(value);
+  const debouncedChange = useDebounce(onChange, 500);
 
   // ########################  USANDO FETCH
   React.useEffect(() => {
@@ -16,6 +19,11 @@ const ListasCarros = () => {
         setCarros(resultado);
       });
   });
+
+  function handleChange(event) {
+    setDisplayvalue(event.target.value);
+    onChange(event.target.value);
+  }
 
   // ######################## USANDO AXIOS
   // React.useEffect(() => {
@@ -39,6 +47,7 @@ const ListasCarros = () => {
 
   return (
     <div>
+      <input type="text" value={value} onChange={handleChange} />
       {carros.map((carro) => (
         <div key={carro.id}>
           {carro.marca} - {carro.modelo}
